@@ -91,6 +91,8 @@ export default function App() {
         formatTime={formatTime}  
     />
     <main className='game'>
+      <div className='description'>Бросайте кубики, кнопкой "Roll". Цель игры - все кубики должны быть одинаковые. Чтобы зафиксировать кубик между бросками, нажмите на него. Постарайтесь показать лучшее время!</div>
+
       <div className="time">Время: {formatTime(time)}</div>
       
       <div className='dice'>
