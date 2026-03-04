@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Confetti from 'react-confetti'
 import Die from './components/Die'
 import Board from './components/Board'
@@ -7,6 +7,9 @@ import { nanoid } from 'nanoid'
 const randomValue = () => Math.floor(6 * Math.random()) + 1
 
 export default function App() {
+
+  const buttonRef = useRef(null);
+
   const [results, setResults] = useState(JSON.parse(localStorage.getItem("bestTime")) || []);
 
   const [numbers, setNumbers] = useState(() => generateAllNewDice());
@@ -25,6 +28,7 @@ export default function App() {
     if (gameWon) {
       setIsGaming(false);
       setResults(prev => [...prev, time]);
+      buttonRef.current.focus(); 
     }
   }, [gameWon])
 
@@ -87,9 +91,11 @@ export default function App() {
   return (
     <>
     {gameWon && <Confetti />}
+
     <Board results = {results} 
         formatTime={formatTime}  
     />
+
     <main className='game'>
       <div className='description'>Бросайте кубики, кнопкой "Roll". Цель игры - все кубики должны быть одинаковые. Чтобы зафиксировать кубик между бросками, нажмите на него. Постарайтесь показать лучшее время!</div>
 
@@ -101,7 +107,7 @@ export default function App() {
             <Die key={el.id} value={el.value} isHeld={el.isHeld} holdFunction={() => hold(el.id)} />)
         }
       </div>
-      <button className='roll' onClick={roll}>
+      <button className='roll' onClick={roll} ref = {buttonRef}>
         {!gameWon ? 'Roll' : 'New Game'}
       </button>
     </main>

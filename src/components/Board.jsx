@@ -1,6 +1,6 @@
 export default function Board({results, formatTime}) {
     const sortedResults = [...results].sort((a, b) => a - b);
-    let bestRes = results.slice(0, 5);
+    const bestRes = sortedResults.slice(0, 5);
     return (
         <>
             <table className="results-table" >
@@ -18,7 +18,6 @@ export default function Board({results, formatTime}) {
                             <td>{formatTime(el+10)}</td>
                         </tr>  
                     )
-
                 })}
                 </tbody>
                 
